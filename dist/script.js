@@ -43,36 +43,35 @@ function deletar(){
 	$("#dados").html('Fruta apagada!');
 }
 
-function post(){
+function adicionar(){
 	var nome = $("#nome").val();
-	var valor = $("#valor").val();
-	var status = '';
-	var estoque = $("#estoque").val();
+		valor = $("#valor").val();
+		estoque = $("#estoque").val();
+
 	$.ajax({
 		type: "POST",
 		url: host["urlProduct"],
 		data: {
-			Nome: nome,
-			Valor: valor,
-			Status: '',
-			Estoque: estoque,
+			nome:  nome,
+			valor: valor,
+			status: '',
+			estoque: estoque,
 		}
-
 	});
 }
 
 $(document).ready(function(){
-	$("#botao").click(function(){
-		tipoEntrada();
-	});
 	chamaLista();
 	$("#att").click(function(){
 		chamaLista();
+	});
+	$("#botao").click(function(){
+		tipoEntrada();
 	});
 	$("#deletar").click(function(){
 		deletar();
 	});
 	$("#adicionar").click(function(){
-		post();
+		adicionar();
 	});
 }); 
