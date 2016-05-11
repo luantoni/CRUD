@@ -12,7 +12,6 @@ function chamaLista (){
 }
 
 function chamaIndividual(entrada){
-	entrada=entrada.toLowerCase()
 	$.getJSON(host["urlProduct"] + entrada, function (data){ //.getJSON faz uma requisição e o que retornar ele transforma em JSON
 		escrevendoSaida(data);
 	})
@@ -35,6 +34,33 @@ function tipoEntrada(){
 		chamaIndividual(entrada);
 }
 
+function deletar(){
+	var entrada = $("#numero").val();
+	$.ajax({
+	    type: 'DELETE',
+	    url: host["urlProduct"] + entrada,
+	});
+	$("#dados").html('Fruta apagada!');
+}
+
+function post(){
+	var nome = $("#nome").val();
+	var valor = $("#valor").val();
+	var status = '';
+	var estoque = $("#estoque").val();
+	$.ajax({
+		type: "POST",
+		url: host["urlProduct"],
+		data: {
+			Nome: nome,
+			Valor: valor,
+			Status: '',
+			Estoque: estoque,
+		}
+
+	});
+}
+
 $(document).ready(function(){
 	$("#botao").click(function(){
 		tipoEntrada();
@@ -42,5 +68,11 @@ $(document).ready(function(){
 	chamaLista();
 	$("#att").click(function(){
 		chamaLista();
+	});
+	$("#deletar").click(function(){
+		deletar();
+	});
+	$("#adicionar").click(function(){
+		post();
 	});
 }); 
