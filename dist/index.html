@@ -13,30 +13,34 @@
         <input type="text" id="numero">
         <button id="botao">Pesquisar</button>
         <button id="deletar">Deletar</button>
+        <button id="adicionarFruta">Adicionar</button>
+        <button id="editar">Editar</button>
         <div id="dados"></div>
+        <div id="novaFruta">
+            <form>
+                Fruta:
+                <input type="text" id="nome">
+                <br>
+                Valor:
+                <input type="text" id="valor">
+                <br>
+                Estoque:
+                <input type="text" id="estoque">
+                <br>
+                Status:
+                <input type="radio" name="marcaStatus" value="ativo" checked> Ativo
+                <input type="radio" name="marcaStatus" value="inativo"> Inativo
+                <br>
+                <button id="adicionar">Adicionar</button><br>
+                <button id="edit">Editar</button>
+            </form>
+        </div>
     </div>
     <div id="lista">
         <h3 id="tituloDisponivel">Frutas disponíveis</h3>
         <div id="disponivel"></div><br>
-        <button id="att">Atualizar</button>
+        <button id="atualizar">Atualizar</button>
     </div>
-    <div>
-        <form>
-            Fruta:
-            <input type="text" id="nome">
-            <br>
-            Valor:
-            <input type="text" id="valor">
-            <br>
-            Estoque:
-            <input type="text" id="estoque">
-            <br>
-            Status:
-            <input type="radio" name="marcaStatus" value="ativo" checked='selecionado'> Ativo
-            <input type="radio" name="marcaStatus" value="inativo"> Inativo
-            <br>
-            <button id="adicionar">Adicionar</button>
-        </form>
-    </div>
+    
     </body>
 </html> 

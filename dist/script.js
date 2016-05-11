@@ -32,6 +32,27 @@ function escrevendoSaida (data){
 function tipoEntrada(){
 	var entrada = $("#numero").val();
 		chamaIndividual(entrada);
+		ocultarAdicionar ()
+}
+
+function editar(){
+	var entrada = $("#numero").val();
+ 		nome = $("#nome").val();
+		valor = $("#valor").val();
+		estoque = $("#estoque").val();
+		status = $('input[name=marcaStatus]:checked').val();
+
+		nome = nome.toLowerCase()
+	$.ajax({
+		type: 'PUT',
+		url: host["urlProduct"] + entrada,
+		data: {
+			nome:  nome,
+			valor: valor,
+			status: status,
+			estoque: estoque,
+		}
+	})
 }
 
 function deletar(){
@@ -41,28 +62,50 @@ function deletar(){
 	    url: host["urlProduct"] + entrada,
 	});
 	$("#dados").html('Fruta apagada!');
+	ocultarAdicionar ()
 }
 
 function adicionar(){
 	var nome = $("#nome").val();
 		valor = $("#valor").val();
 		estoque = $("#estoque").val();
+		status = $('input[name="marcaStatus]:checked').val();
 
+		nome = nome.toLowerCase()
 	$.ajax({
 		type: "POST",
 		url: host["urlProduct"],
 		data: {
 			nome:  nome,
 			valor: valor,
-			status: '',
+			status: status,
 			estoque: estoque,
 		}
 	});
 }
 
+function mostrarEditar(){
+	$("#dados").html('');
+    $("#novaFruta").show();
+    $("#adicionar").hide()
+    $("#edit").show()
+}
+
+function mostrarAdicionar (){
+	$("#dados").html('');
+    $("#novaFruta").show();
+    $("#edit").hide()
+    $("#adicionar").show()
+}
+
+function ocultarAdicionar (){
+	$("#novaFruta").hide();
+}
+
 $(document).ready(function(){
 	chamaLista();
-	$("#att").click(function(){
+	$("#novaFruta").hide();
+	$("#atualizar").click(function(){
 		chamaLista();
 	});
 	$("#botao").click(function(){
@@ -71,7 +114,16 @@ $(document).ready(function(){
 	$("#deletar").click(function(){
 		deletar();
 	});
+	$("#adicionarFruta").click(function(){
+		mostrarAdicionar();
+	});
 	$("#adicionar").click(function(){
 		adicionar();
+	});
+	$("#editar").click(function(){
+		mostrarEditar();
+	});
+	$("#edit").click(function(){
+		editar();
 	});
 }); 
