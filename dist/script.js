@@ -33,6 +33,7 @@ function tipoEntrada(){
 	var entrada = $("#numero").val();
 		chamaIndividual(entrada);
 		ocultarAdicionar ()
+		$("#dados").show();
 }
 
 function editar(){
@@ -63,6 +64,7 @@ function deletar(){
 	});
 	$("#dados").html('Fruta apagada!');
 	ocultarAdicionar ()
+	$("#dados").show();
 }
 
 function adicionar(){
@@ -85,17 +87,17 @@ function adicionar(){
 }
 
 function mostrarEditar(){
-	$("#dados").html('');
+	$("#dados").hide();
     $("#novaFruta").show();
-    $("#adicionar").hide()
-    $("#edit").show()
+    $("#adicionar").hide();
+    $("#edit").show();
 }
 
 function mostrarAdicionar (){
-	$("#dados").html('');
+	$("#dados").hide();
     $("#novaFruta").show();
-    $("#edit").hide()
-    $("#adicionar").show()
+    $("#edit").hide();
+    $("#adicionar").show();
 }
 
 function ocultarAdicionar (){
@@ -104,6 +106,7 @@ function ocultarAdicionar (){
 
 $(document).ready(function(){
 	chamaLista();
+	$("#dados").hide();
 	$("#novaFruta").hide();
 	$("#atualizar").click(function(){
 		chamaLista();
