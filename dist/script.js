@@ -69,7 +69,7 @@ function adicionar(){
 	var nome = $("#nome").val();
 		valor = $("#valor").val();
 		estoque = $("#estoque").val();
-		status = $('input[name="marcaStatus]:checked').val();
+		status = $('input[name=marcaStatus]:checked').val();
 
 		nome = nome.toLowerCase()
 	$.ajax({
