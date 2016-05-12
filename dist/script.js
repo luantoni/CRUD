@@ -5,7 +5,7 @@ function chamaLista(){
 		var lista = '';
 		var i;
 		for(i=0; i < list.length; i++){
-			lista += "<span class='"+list[i].status+"'>"+ list[i].id + " - " + list[i].nome +"</span><br>";
+			lista += "<span class='"+list[i].status+"'>"+ list[i].id + " - " + list[i].nome + " - R$ " + list[i].valor + "</span><br>";
 		}
 		$("#disponivel").html(lista);
 	})
@@ -89,11 +89,21 @@ function ajax (tipo,link){
 
 function editar(){
 	entrada = $("#numero").val();
-	ajax('PUT',host["urlProduct"] + entrada);
+	if($("#nome").val() !== '' && $("#valor").val() !== '' && $("#estoque").val() !== ''){
+		ajax('PUT',host["urlProduct"] + entrada);
+	}
+	else{
+		alert("Preencha todos os campos para adicionar uma nova fruta!");
+	}
 }
 
 function adicionar(){
-	ajax('POST',host["urlProduct"]);
+	if($("#nome").val() !== '' && $("#valor").val() !== '' && $("#estoque").val() !== ''){
+		ajax('POST',host["urlProduct"]);
+	}
+	else{
+		alert("Preencha todos os campos para adicionar uma nova fruta!");
+	}
 }
 
 function mostrarEditar(){

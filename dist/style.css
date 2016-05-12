@@ -5,7 +5,7 @@ span.I{color:red;}
 #bordacentral{display:inline-block;margin:20px auto;padding: 10px;text-align:center;width:600px;min-height:400px;max-height:auto;background: #c2c2a3;border-radius:15px;box-shadow:0 0 20px 5px #ffffff;}
 #titulo{font-family:Comic Sans MS;;color:#2e2e1f;}
 #dados{margin:20px auto;font-size:30px;font-family:Comic Sans MS;color:#2e2e1f;width: 350px;background: #adad85;border-radius:15px;box-shadow:0 0 20px 5px #000000;margin-top: 30px;}
-#lista{margin:20px auto;padding: 10px;text-align:center;width:150px;min-height:50px;max-height:auto;background: #c2c2a3;border-radius:15px;box-shadow:0 0 20px 5px #ffffff;float:right;margin-right: 15px;}
+#lista{margin:20px auto;padding: 10px;text-align:center;width:200px;min-height:50px;max-height:auto;background: #c2c2a3;border-radius:15px;box-shadow:0 0 20px 5px #ffffff;float:right;margin-right: 15px;}
 #disponivel{font-family:Comic Sans MS;color:#2e2e1f;}
 #tituloDisponivel{font-family:Comic Sans MS;color:#2e2e1f;}
 #conteudo{margin:20px auto;padding: 10px;text-align:center;width:200px;min-height:150px;font-weight: bold;max-height:auto;background: #adad85;border-radius:15px;box-shadow:0 0 20px 5px #000000;}
