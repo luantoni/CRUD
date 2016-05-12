@@ -11,15 +11,6 @@ function chamaLista (){
 	})
 }
 
-function chamaIndividual(entrada){
-	$.getJSON(host["urlProduct"] + entrada, function (data){ //.getJSON faz uma requisição e o que retornar ele transforma em JSON
-		escrevendoSaida(data);
-	})
-	.fail(function() {
-	    $("#dados").html('Fruta não disponível!');
-	})
-}
-
 function escrevendoSaida (data){
 	var saida = "";
 	saida = "Fruta: " + data.nome + "<br>" +
@@ -29,31 +20,30 @@ function escrevendoSaida (data){
 	$("#dados").html(saida);
 }
 
-function tipoEntrada(){
+function chamaIndividual(entrada){
+	$.getJSON(host["urlProduct"] + entrada, function (data){ //.getJSON faz uma requisição e o que retornar ele transforma em JSON
+		escrevendoSaida(data);
+	})
+	.fail(function() {
+	    $("#dados").html('Fruta não disponível!');
+	})
+}
+
+function pesquisar(){
 	var entrada = $("#numero").val();
 		chamaIndividual(entrada);
-		ocultarAdicionar ()
+		ocultarAdicionar ();
 		$("#dados").show();
 }
 
-function editar(){
+function mensagemDeletar(){
 	var entrada = $("#numero").val();
- 		nome = $("#nome").val();
-		valor = $("#valor").val();
-		estoque = $("#estoque").val();
-		status = $('input[name=marcaStatus]:checked').val();
-
-		nome = nome.toLowerCase()
-	$.ajax({
-		type: 'PUT',
-		url: host["urlProduct"] + entrada,
-		data: {
-			nome:  nome,
-			valor: valor,
-			status: status,
-			estoque: estoque,
-		}
-	})
+	if (entrada !=''){
+		$("#dados").html('Fruta apagada!');
+	}
+	else{
+		$("#dados").html('Digite um ID para apagar!');
+	}
 }
 
 function deletar(){
@@ -62,28 +52,38 @@ function deletar(){
 	    type: 'DELETE',
 	    url: host["urlProduct"] + entrada,
 	});
-	$("#dados").html('Fruta apagada!');
-	ocultarAdicionar ()
+	ocultarAdicionar ();
 	$("#dados").show();
+	mensagemDeletar();
 }
 
-function adicionar(){
+function ajax (tipo,link){
 	var nome = $("#nome").val();
 		valor = $("#valor").val();
 		estoque = $("#estoque").val();
 		status = $('input[name=marcaStatus]:checked').val();
 
-		nome = nome.toLowerCase()
+	nome = nome.toLowerCase();
 	$.ajax({
-		type: "POST",
-		url: host["urlProduct"],
+		type: tipo,
+		url: link,
 		data: {
-			nome:  nome,
+			nome: nome,
 			valor: valor,
 			status: status,
 			estoque: estoque,
 		}
 	});
+}
+
+function editar(){
+	entrada = $("#numero").val();
+	ajax('PUT',host["urlProduct"] + entrada);
+
+}
+
+function adicionar(){
+	ajax('POST',host["urlProduct"]);
 }
 
 function mostrarEditar(){
@@ -104,18 +104,23 @@ function ocultarAdicionar (){
 	$("#novaFruta").hide();
 }
 
-$(document).ready(function(){
+function inicia (){
 	chamaLista();
 	$("#dados").hide();
 	$("#novaFruta").hide();
+}
+
+$(document).ready(function(){
+	inicia();
 	$("#atualizar").click(function(){
 		chamaLista();
 	});
 	$("#botao").click(function(){
-		tipoEntrada();
+		pesquisar();
 	});
 	$("#deletar").click(function(){
 		deletar();
+		chamaLista();
 	});
 	$("#adicionarFruta").click(function(){
 		mostrarAdicionar();
