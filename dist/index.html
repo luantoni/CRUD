@@ -11,12 +11,14 @@
     <div id="bordacentral">
         <h1 id="titulo">Fruteira DD</h1>
         <button id="botao">Pesquisar</button>
-        <button id="deletar">Deletar</button>
-        <button id="adicionarFruta">Adicionar</button>
-        <button id="editar">Editar</button><br><br>
-        ID: 
-        <input type="text" id="numero">
+        <button id="adicionarFruta">Adicionar</button><br><br>
+        <div id="barraId">
+            ID: 
+            <input type="text" id="numero">
+        </div>
         <div id="dados"></div>
+        <button id="deletar">Deletar</button>
+        <button id="editar">Editar</button>
         <div id="novaFruta">
             <form id="conteudo">
                 Fruta:
@@ -29,8 +31,8 @@
                 <input type="text" id="estoque">
                 <br>
                 Status:
-                <input type="radio" name="marcaStatus" value="ativo" checked> Ativo
-                <input type="radio" name="marcaStatus" value="inativo"> Inativo
+                <input type="radio" name="marcaStatus" value="A" checked> Ativo
+                <input type="radio" name="marcaStatus" value="I"> Inativo
                 <br>
                 <button id="adicionar">Adicionar</button><br>
                 <button id="edit">Editar</button>

@@ -1,17 +1,17 @@
 var host = {urlList:"http://localhost:3000/product", urlProduct:"http://localhost:3000/product/"};
 
-function chamaLista (){
+function chamaLista(){
 	$.getJSON(host["urlList"], function (list){
 		var lista = '';
 		var i;
 		for(i=0; i < list.length; i++){
-			lista += list[i].id + " - " + list[i].nome +"<br>";
+			lista += "<span class='"+list[i].status+"'>"+ list[i].id + " - " + list[i].nome +"</span><br>";
 		}
 		$("#disponivel").html(lista);
 	})
 }
 
-function escrevendoSaida (data){
+function escrevendoSaida(data){
 	var saida = "";
 	saida = "Fruta: " + data.nome + "<br>" +
 	"Valor: R$ " + data.valor + "<br>" +
@@ -23,6 +23,8 @@ function escrevendoSaida (data){
 function chamaIndividual(entrada){
 	$.getJSON(host["urlProduct"] + entrada, function (data){ //.getJSON faz uma requisição e o que retornar ele transforma em JSON
 		escrevendoSaida(data);
+		$("#editar").show();
+		$("#deletar").show();
 	})
 	.fail(function() {
 	    $("#dados").html('Fruta não disponível!');
@@ -51,10 +53,16 @@ function deletar(){
 	$.ajax({
 	    type: 'DELETE',
 	    url: host["urlProduct"] + entrada,
+	    success: function(){
+	    	chamaLista();
+	    }
 	});
 	ocultarAdicionar ();
 	$("#dados").show();
 	mensagemDeletar();
+	$("#editar").hide();
+	$("#deletar").hide();
+	$("#barraId").show();
 }
 
 function ajax (tipo,link){
@@ -72,6 +80,9 @@ function ajax (tipo,link){
 			valor: valor,
 			status: status,
 			estoque: estoque,
+		},
+		success: function(){
+			chamaLista();
 		}
 	});
 }
@@ -79,7 +90,6 @@ function ajax (tipo,link){
 function editar(){
 	entrada = $("#numero").val();
 	ajax('PUT',host["urlProduct"] + entrada);
-
 }
 
 function adicionar(){
@@ -91,23 +101,34 @@ function mostrarEditar(){
     $("#novaFruta").show();
     $("#adicionar").hide();
     $("#edit").show();
+    $("#editar").hide();
+	$("#deletar").hide();
+	$("#barraId").show();
 }
 
-function mostrarAdicionar (){
+function mostrarAdicionar(){
 	$("#dados").hide();
     $("#novaFruta").show();
     $("#edit").hide();
     $("#adicionar").show();
+    $("#editar").hide();
+	$("#deletar").hide();
+	$("#barraId").hide();
+	$("#botao").hide();
+	$("#adicionarFruta").hide();
 }
 
-function ocultarAdicionar (){
+function ocultarAdicionar(){
 	$("#novaFruta").hide();
 }
 
-function inicia (){
+function inicia(){
 	chamaLista();
 	$("#dados").hide();
 	$("#novaFruta").hide();
+	$("#editar").hide();
+	$("#deletar").hide();
+	$("#barraId").show();
 }
 
 $(document).ready(function(){
@@ -120,7 +141,6 @@ $(document).ready(function(){
 	});
 	$("#deletar").click(function(){
 		deletar();
-		chamaLista();
 	});
 	$("#adicionarFruta").click(function(){
 		mostrarAdicionar();
