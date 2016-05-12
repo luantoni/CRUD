@@ -8,7 +8,9 @@ span.I{color:red;}
 #lista{margin:20px auto;padding: 10px;text-align:center;width:150px;min-height:50px;max-height:auto;background: #c2c2a3;border-radius:15px;box-shadow:0 0 20px 5px #ffffff;float:right;margin-right: 15px;}
 #disponivel{font-family:Comic Sans MS;color:#2e2e1f;}
 #tituloDisponivel{font-family:Comic Sans MS;color:#2e2e1f;}
-#conteudo{margin:20px auto;padding: 10px;text-align:center;width:200px;min-height:150px;max-height:auto;background: #adad85;border-radius:15px;box-shadow:0 0 20px 5px #000000;}
+#conteudo{margin:20px auto;padding: 10px;text-align:center;width:200px;min-height:150px;font-weight: bold;max-height:auto;background: #adad85;border-radius:15px;box-shadow:0 0 20px 5px #000000;}
+.caixa{margin: 0 auto; background: #e0e0d1; border-color: #b7b795 ; font-weight: bold;}
+.bota1{background: #e0e0d1;border-color: #89895d; font-weight: bold;}
 }
 
 @media only screen and (min-width: 450px) and (max-width: 899px){
@@ -22,6 +24,7 @@ span.I{color:red;}
 #disponivel{font-family:Comic Sans MS;color:#2e2e1f;}
 #tituloDisponivel{font-family:Comic Sans MS;color:#2e2e1f;}
 #conteudo{margin:20px auto;padding: 10px;text-align:center;width:200px;min-height:150px;max-height:auto;background: #adad85;border-radius:15px;box-shadow:0 0 20px 5px #000000;}
+#numero{margin: 0 auto; background: #e0e0d1; border-color: #b7b795 ; font-weight: bold;}
 }
 
 @media only screen and (min-width: 100px) and (max-width: 449px){
@@ -35,4 +38,5 @@ span.I{color:red;}
 #disponivel{font-family:Comic Sans MS;color:#2e2e1f;}
 #tituloDisponivel{font-family:Comic Sans MS;color:#2e2e1f;}
 #conteudo{margin:20px auto;padding: 10px;text-align:center;width:200px;min-height:150px;max-height:auto;background: #adad85;border-radius:15px;box-shadow:0 0 20px 5px #000000;}
+#numero{margin: 0 auto; background: #e0e0d1; border-color: #b7b795 ; font-weight: bold;}
 }
