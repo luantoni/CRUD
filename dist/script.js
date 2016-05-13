@@ -1,7 +1,7 @@
-var host = {urlList:"http://localhost:3000/product", urlProduct:"http://localhost:3000/product/"};
+var host = {urlProduct:"http://localhost:3000/product/"};
 
 function chamaLista(){
-	$.getJSON(host["urlList"], function (list){
+	$.getJSON(host.urlProduct, function (list){
 		var lista = '';
 		var i;
 		for(i=0; i < list.length; i++){
@@ -21,7 +21,7 @@ function escrevendoSaida(data){
 }
 
 function chamaIndividual(entrada){
-	$.getJSON(host["urlProduct"] + entrada, function (data){ //.getJSON faz uma requisição e o que retornar ele transforma em JSON
+	$.getJSON(host.urlProduct + entrada, function (data){ //.getJSON faz uma requisição e o que retornar ele transforma em JSON
 		escrevendoSaida(data);
 		$("#editar").show();
 		$("#deletar").show();
@@ -52,7 +52,7 @@ function deletar(){
 	var entrada = $("#numero").val();
 	$.ajax({
 	    type: 'DELETE',
-	    url: host["urlProduct"] + entrada,
+	    url: host.urlProduct + entrada,
 	    success: function(){
 	    	chamaLista();
 	    }
@@ -90,7 +90,7 @@ function ajax (tipo,link){
 function editar(){
 	entrada = $("#numero").val();
 	if($("#nome").val() !== '' && $("#valor").val() !== '' && $("#estoque").val() !== ''){
-		ajax('PUT',host["urlProduct"] + entrada);
+		ajax('PUT',host.urlProduct + entrada);
 	}
 	else{
 		alert("Preencha todos os campos para adicionar uma nova fruta!");
@@ -99,7 +99,7 @@ function editar(){
 
 function adicionar(){
 	if($("#nome").val() !== '' && $("#valor").val() !== '' && $("#estoque").val() !== ''){
-		ajax('POST',host["urlProduct"]);
+		ajax('POST',host.urlProduct);
 	}
 	else{
 		alert("Preencha todos os campos para adicionar uma nova fruta!");
