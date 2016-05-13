@@ -1,4 +1,4 @@
-var host = {urlProduct:"http://localhost:3000/product/"};
+var host = {urlProduct:"http://localhost:3000/product"};
 var mensagens = {
 	disponibilidade:"Fruta não disponível!",
 	deletada: "Fruta apagada!",
@@ -25,7 +25,8 @@ function chamaLista(){
 
 function escrevendoSaida(data){
 	var saida = "";
-	saida = "Fruta: " + data.nome + "<br>" +
+	saida = "Id" + data.id + "<br>" +
+	"Fruta: " + data.nome + "<br>" +
 	"Valor: R$ " + data.valor + "<br>" +
 	"Status: " + data.status + "<br>" +
 	"Estoque: " + data.estoque + "<br>";
@@ -33,14 +34,29 @@ function escrevendoSaida(data){
 }
 
 function chamaIndividual(entrada){
-	$.getJSON(host.urlProduct + entrada, function (data){ //.getJSON faz uma requisição e o que retornar ele transforma em JSON
+	valor = isNaN(entrada);
+	if (valor == false){
+		
+	$.getJSON(host.urlProduct + "/"+entrada, function (data){ //.getJSON faz uma requisição e o que retornar ele transforma em JSON
+		console.log(data);
 		escrevendoSaida(data);
 		$("#editar").show();
 		$("#deletar").show();
 	})
-	.fail(function() {
-	    $("#dados").html(mensagens.disponibilidade);
+	}
+	
+	else if (valor == true){
+		console.log(entrada);
+		$.getJSON(host.urlProduct + "?nome="+entrada, function (data){ //.getJSON faz uma requisição e o que retornar ele transforma em JSON
+		console.log(data);
+		escrevendoSaida(data);
+		$("#editar").show();
+		$("#deletar").show();
 	})
+	}
+	/*.fail(function() {
+	    $("#dados").html(mensagens.disponibilidade);
+	})*/
 }
 
 function pesquisar(){
