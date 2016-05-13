@@ -1,4 +1,16 @@
 var host = {urlProduct:"http://localhost:3000/product/"};
+var mensagens = {
+	disponibilidade:"Fruta não disponível!",
+	deletada: "Fruta apagada!",
+	comandoId: "Digite um ID para apagar!",
+	alertaCampo: "Preencha todos os campos para adicionar uma nova fruta!",
+}
+
+$(document).keypress(function(e) {
+	if (e.which == 13) {
+		pesquisar();
+	}
+});
 
 function chamaLista(){
 	$.getJSON(host.urlProduct, function (list){
@@ -27,7 +39,7 @@ function chamaIndividual(entrada){
 		$("#deletar").show();
 	})
 	.fail(function() {
-	    $("#dados").html('Fruta não disponível!');
+	    $("#dados").html(mensagens.disponibilidade);
 	})
 }
 
@@ -41,10 +53,10 @@ function pesquisar(){
 function mensagemDeletar(){
 	var entrada = $("#numero").val();
 	if (entrada !=''){
-		$("#dados").html('Fruta apagada!');
+		$("#dados").html(mensagens.deletada);
 	}
 	else{
-		$("#dados").html('Digite um ID para apagar!');
+		$("#dados").html(mensagens.comandoId);
 	}
 }
 
@@ -93,7 +105,7 @@ function editar(){
 		ajax('PUT',host.urlProduct + entrada);
 	}
 	else{
-		alert("Preencha todos os campos para adicionar uma nova fruta!");
+		alert(mensagens.alertaCampo);
 	}
 }
 
@@ -102,7 +114,7 @@ function adicionar(){
 		ajax('POST',host.urlProduct);
 	}
 	else{
-		alert("Preencha todos os campos para adicionar uma nova fruta!");
+		alert(mensagens.alertaCampo);
 	}
 }
 
