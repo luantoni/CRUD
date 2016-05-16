@@ -142,10 +142,10 @@ function editar(){
 }
 
 function adicionar(){
-	nomeTamanho = $("#nome").val();
-	
-	if(nomeTamanho !== '' && $("#valor").val() !== '' && $("#estoque").val() !== ''){
-		if (nomeTamanho.length > 3){
+	var nomeTamanho = $("#nome").val();
+	if(nomeTamanho !== '' && $("#valor") !== '' && $("#estoque").val() !== ''){
+		console.log(nomeTamanho);
+		if (nomeTamanho.length > 2){
 			ajax('POST',host.urlProduct);
 		}
 		else {
@@ -235,6 +235,8 @@ $(document).ready(function(){
 	testeLetra();
 	testeNumero();
 	
+	$("#valor").maskMoney({showSymbol:true, symbol:"", decimal:".", thousands:","});
+
 	$("#atualizar").click(function(){
 		chamaLista();
 	});
