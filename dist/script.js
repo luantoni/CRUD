@@ -5,7 +5,8 @@ var mensagens = {
 	comandoId: "Digite um ID para apagar!",
 	alertaCampo: "Preencha todos os campos para adicionar uma nova fruta!",
 	alertaCampoTamanho: "Nome da Fruta deve conter no mínimo três caracteres",
-	confirmar: "Você tem certeza?"
+	confirmar: "Você tem certeza?",
+	errorServer: "Servidor offline"
 }
 
 $(document).keypress(function(e) {
@@ -22,6 +23,13 @@ function chamaLista(){
 			lista += "<span class='"+list[i].status+"'>"+ list[i].id + " - " + list[i].nome + " - R$ " + list[i].valor + "</span><br>";
 		}
 		$("#disponivel").html(lista);
+	})
+	
+	.fail(function() {
+		alert(mensagens.errorServer);
+		$("#dados").hide();
+		debugger;
+		chamaLista();
 	})
 }
 
@@ -52,9 +60,9 @@ function pesquisarNumero(entrada){
 		escrevendoSaida(data);
 	})
 	
-	/*.fail(function() {
+	.fail(function() {
 		$("#dados").html(mensagens.disponibilidade);
-	})*/
+	})
 }
 
 function pesquisarNome(entrada){
@@ -63,9 +71,9 @@ function pesquisarNome(entrada){
 		escrevendoSaida(data[0]);
 	})
 	
-	/*.fail(function() {
+	.fail(function() {
 		$("#dados").html(mensagens.disponibilidade);
-	})*/
+	})
 }
 
 
@@ -113,10 +121,10 @@ function deletar(){
 
 function ajax (tipo,parametro){
 	var nome = $("#nome").val();
-		valor = $("#valor").val();
-		estoque = $("#estoque").val();
-		status = $('input[name=marcaStatus]:checked').val();
-		nome = nome.toLowerCase();
+	var	valor = $("#valor").val();
+	var	estoque = $("#estoque").val();
+	var	status = $('input[name=marcaStatus]:checked').val();
+	var	nome = nome.toLowerCase();
 		
 	$.ajax({
 		type: tipo,
@@ -242,7 +250,7 @@ $(document).ready(function(){
 	testeNegativo();
 	testeLetra();
 	testeNumero();
-	
+
 	
 	$("#valor").maskMoney({showSymbol:true, symbol:"", decimal:".", thousands:","});
 
