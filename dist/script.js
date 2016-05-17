@@ -19,16 +19,27 @@ function chamaLista(){
 	$.getJSON(host.urlProduct, function (list){
 		var lista = '';
 		var i;
+		var totalEstoque = 0;
+		var valorTotalEstoque = 0;
+		
+        var valorTotal = 0;
+		var valorCadaProduto=0;
 		for(i=0; i < list.length; i++){
-			lista += "<span class='"+list[i].status+"'>"+ list[i].id + " - " + list[i].nome + " - R$ " + list[i].valor + "</span><br>";
+			lista += "<span class='"+list[i].status+"'>"+ list[i].id + " - " + list[i].nome + " - R$ " + list[i].valor + " - " + list[i].estoque +"</span><br>";
+			valorCadaProduto = list[i].valor * list[i].estoque;
+			valorTotal = valorCadaProduto + valorTotal;
+			totalEstoque = list[i].estoque;
+			valorTotalEstoque = valorTotalEstoque + totalEstoque;
 		}
+		lista += '<td> Valor total: R$'+valorTotal+'</td>';
+		lista += '<td> Estoque total:'+valorTotalEstoque+'</td>';
 		$("#disponivel").html(lista);
 	})
 	
+	
 	.fail(function() {
 		alert(mensagens.errorServer);
-		$("#dados").hide();
-		debugger;
+		/*debugger;*/
 		chamaLista();
 	})
 }
@@ -51,29 +62,36 @@ function chamaIndividual(entrada){
 	else if (valor == true){
 		pesquisarNome(entrada);
 	}
-	
-	mostrarPesquisar();
 }
 
 function pesquisarNumero(entrada){
 	$.getJSON(host.urlProduct + "/"+entrada, function (data){ //.getJSON faz uma requisição e o que retornar ele transforma em JSON
 		escrevendoSaida(data);
+		mostrarPesquisar();
 	})
 	
 	.fail(function() {
-		$("#dados").html(mensagens.disponibilidade);
+		funcaoError();
 	})
 }
 
 function pesquisarNome(entrada){
 	var entradaMinuscula = entrada.toLowerCase();
 	$.getJSON(host.urlProduct + "?nome="+entradaMinuscula, function (data){ //.getJSON faz uma requisição e o que retornar ele transforma em JSON
+		console.log(entradaMinuscula);
 		escrevendoSaida(data[0]);
+		console.log(data[0]);
+		mostrarPesquisar();
 	})
 	
-	.fail(function() {
-		$("#dados").html(mensagens.disponibilidade);
+	.fail(function(escrevendoSaida) {
+		funcaoError();
 	})
+}
+
+function funcaoError(){
+	$("#dados").html(mensagens.disponibilidade);
+	ocultarNaoDisponivel();
 }
 
 
