@@ -8,12 +8,49 @@ var mensagens = {
 	confirmar: "Você tem certeza?",
 	errorServer: "Servidor offline"
 }
+$(document).ready(function(){
+	inicia();
+	chamaLista();
+	testeNegativo();
+	testeLetra();
+	testeNumero();
+
+	
+	$("#valor").maskMoney({showSymbol:true, symbol:"", decimal:".", thousands:","});
+
+	$("#atualizar").click(function(){
+		chamaLista();
+	});
+	$("#botao").click(function(){
+		pesquisar();
+	});
+	$("#deletar").click(function(){
+		deletar();
+	});
+	$("#adicionarFruta").click(function(){
+		mostrarAdicionar();
+	});
+	$("#adicionar").click(function(){
+		adicionar();
+	});
+	$("#editar").click(function(){
+		mostrarEditar();
+	});
+	$("#edit").click(function(){
+		editar();
+	});
+}); 
 
 $(document).keypress(function(e) {
 	if (e.which == 13) {
 		pesquisar();
 	}
 });
+function inicia(){
+	/*chamaLista();*/
+	esconde(['#dados','#novaFruta','#editar','#deletar']);
+	mostra(['#barraId']);
+}
 
 function chamaLista(){
 	$.getJSON(host.urlProduct, function (list){
@@ -31,7 +68,7 @@ function chamaLista(){
 			totalEstoque = list[i].estoque;
 			valorTotalEstoque = valorTotalEstoque + totalEstoque;
 		}
-		lista += '<td> Valor total: R$'+valorTotal+'</td>';
+		lista += '<td>Valor total: R$'+valorTotal+'</td>';
 		lista += '<td> Estoque total:'+valorTotalEstoque+'</td>';
 		$("#disponivel").html(lista);
 	})
@@ -39,7 +76,7 @@ function chamaLista(){
 	
 	.fail(function() {
 		alert(mensagens.errorServer);
-		/*debugger;*/
+		debugger;
 		chamaLista();
 	})
 }
@@ -77,15 +114,15 @@ function pesquisarNumero(entrada){
 
 function pesquisarNome(entrada){
 	var entradaMinuscula = entrada.toLowerCase();
-	$.getJSON(host.urlProduct + "?nome="+entradaMinuscula, function (data){ //.getJSON faz uma requisição e o que retornar ele transforma em JSON
-		console.log(entradaMinuscula);
-		escrevendoSaida(data[0]);
-		console.log(data[0]);
-		mostrarPesquisar();
-	})
-	
-	.fail(function(escrevendoSaida) {
-		funcaoError();
+	$.getJSON(host.urlProduct + "?nome="+ entradaMinuscula, function (data){ //.getJSON faz uma requisição e o que retornar ele transforma em JSON
+		console.log(data.length);
+		if (data.length != 0){
+			escrevendoSaida(data[0]);
+			mostrarPesquisar();
+		}
+		else {
+			funcaoError();
+		}
 	})
 }
 
@@ -180,11 +217,13 @@ function adicionar(){
 		}
 		else {
 			alert(mensagens.alertaCampoTamanho);
+			window.location.notreload();
 		}
 	}
 
 	else{
 		alert(mensagens.alertaCampo);
+		window.location.notreload();
 	}
 }
 
@@ -214,83 +253,40 @@ function testeNumero(){
 
 function confirmar(){
 	confirm(mensagens.confirmar);
-	chamaLista();
+	/*chamaLista();*/
 }
 
 function mostrarPesquisar(){
-	$("#editar").show();
-	$("#deletar").show();	
+	mostra(['#editar','#deletar']);
 }
-
 function ocultarNaoDisponivel(){
-	$("#editar").hide();
-	$("#deletar").hide();
+	esconde(['#editar','#deletar']);
 }
 
 function mostrarEditar(){
-	$("#dados").hide();
-    $("#novaFruta").show();
-    $("#adicionar").hide();
-    $("#edit").show();
-    $("#editar").hide();
-	$("#deletar").hide();
-	$("#barraId").show();
+	esconde(['#dados','#adicionar','#editar','#deletar']);
+	mostra(['#novaFruta','#edit','#barraId']);
 }
 
 function mostrarAdicionar(){
-	$("#dados").hide();
-    $("#novaFruta").show();
-    $("#edit").hide();
-    $("#adicionar").show();
-    $("#editar").hide();
-	$("#deletar").hide();
-	$("#barraId").hide();
-	$("#botao").hide();
-	$("#adicionarFruta").hide();
+	esconde(['#dados','#edit','#editar','#deletar','#botao','#barraId','#adicionarFruta']);
+	mostra(['#novaFruta','#adicionar']);
 }
 
 function ocultarAdicionar(){
-	$("#novaFruta").hide();
+	esconde(['#novaFruta']);
 }
 
-function inicia(){
-	chamaLista();
-	$("#dados").hide();
-	$("#novaFruta").hide();
-	$("#editar").hide();
-	$("#deletar").hide();
-	$("#barraId").show();
+function esconde (array){
+	for (var x=0; x<array.length; x++){
+		$(array[x]).hide();
+	}
+}
+
+function mostra (array){
+	for (var x=0; x<array.length; x++){
+		$(array[x]).show();
+	}
 }
 
 
-$(document).ready(function(){
-	inicia();
-	testeNegativo();
-	testeLetra();
-	testeNumero();
-
-	
-	$("#valor").maskMoney({showSymbol:true, symbol:"", decimal:".", thousands:","});
-
-	$("#atualizar").click(function(){
-		chamaLista();
-	});
-	$("#botao").click(function(){
-		pesquisar();
-	});
-	$("#deletar").click(function(){
-		deletar();
-	});
-	$("#adicionarFruta").click(function(){
-		mostrarAdicionar();
-	});
-	$("#adicionar").click(function(){
-		adicionar();
-	});
-	$("#editar").click(function(){
-		mostrarEditar();
-	});
-	$("#edit").click(function(){
-		editar();
-	});
-}); 
