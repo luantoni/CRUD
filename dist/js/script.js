@@ -1,5 +1,5 @@
 var host = {urlProduct:"http://localhost:3000/product"};
-var mensagens = {
+var mensagens = { //centralizar mensagens
 	disponibilidade:"Fruta não disponível!",
 	deletada: "Fruta apagada!",
 	comandoId: "Digite um ID para apagar!",
@@ -76,10 +76,16 @@ function chamaLista(){
 	
 	
 	.fail(function() {
+		sleep(3000);
 		confirm(mensagens.errorServer)
 		//debugger;
 		chamaLista();
 	})
+}
+
+function sleep(delay) { //função do delay para fazer a mensagem de 'servidor of' aparecer em um determinado período.
+	var start = new Date().getTime();
+	while (new Date().getTime() < start + delay);
 }
 
 function escrevendoSaida(data){
@@ -106,18 +112,15 @@ function pesquisarNumero(entrada){
 	$.getJSON(host.urlProduct + "/"+entrada, function (data){ //.getJSON faz uma requisição e o que retornar ele transforma em JSON
 		escrevendoSaida(data);
 		mostrarPesquisar();
-		$("#deletar").click(function(){
-			if(confirm(mensagens.confirmar)){
-				deletar(data);
-			}
-		});
-	})
+		chama(data);
+		})
 	
 	.fail(function() {
 		$("#dados").html(mensagens.disponibilidade);
 		ocultarNaoDisponivel();
 	})
 }
+
 
 function pesquisarNome(entrada){
 	var entradaMinuscula = entrada.toLowerCase();
@@ -126,13 +129,8 @@ function pesquisarNome(entrada){
 		if (data.length != 0){
 			escrevendoSaida(data[0]);
 			mostrarPesquisar();
-			$("#deletar").click(function(){
-				if(confirm(mensagens.confirmar)){
-					deletar(data[0]);
-				}
-			});
-		}
-
+			chama(data[0]);
+		}		
 		else {
 			$("#dados").html(mensagens.disponibilidade);
 			ocultarNaoDisponivel();
@@ -140,6 +138,12 @@ function pesquisarNome(entrada){
 	})
 }
 
+function chama(data){
+	$("#deletar").click(function(){
+		console.log(data);
+		deletar(data);
+	});
+}
 
 function pesquisar(){
 	var entrada = $("#numero").val();
@@ -169,21 +173,22 @@ function mensagemDeletar(){
 function deletar(data){
 	mostrarPesquisar();
 	var teste = data.id;
-	$.ajax({
+	if(confirm(mensagens.confirmar)){
+		$.ajax({
 	    type: 'DELETE',
 	    url: host.urlProduct + "/"+teste,
 	    success: function(){
 				mensagemDeletar();
 				chamaLista();
-	    }
-	});
+			}
+		})
+	}
 	ocultarAdicionar ();
 	$("#dados").show();
 	$("#editar").hide();
 	$("#deletar").hide();
 	$("#barraId").show();
 }
-
 
 
 function ajax (tipo,parametro){
